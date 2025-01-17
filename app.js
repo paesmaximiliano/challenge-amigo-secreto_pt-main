@@ -65,11 +65,24 @@ function sortearAmigo() {
         return;
     }
 
+    // Verificando se todos os amigos já foram sorteados
+    if (listaAmigos.length === document.querySelectorAll('.sorteado').length) {
+        alert('Todos os amigos já foram sorteados. Reinicie o sorteio ou adicione novos amigos.');
+        return;
+    }
+
     // Gerando um índice aleatório
-    const indiceAleatorio = Math.floor(Math.random() * listaAmigos.length);
-    
-    // Pegando o nome sorteado
-    const amigoSorteado = listaAmigos[indiceAleatorio].textContent.replace('X', '').trim();
+    let indiceAleatorio;
+    let amigoSorteado;
+
+    // Procurando um amigo que ainda não foi sorteado
+    do {
+        indiceAleatorio = Math.floor(Math.random() * listaAmigos.length);
+        amigoSorteado = listaAmigos[indiceAleatorio].textContent.replace('X', '').trim();
+    } while (listaAmigos[indiceAleatorio].classList.contains('sorteado'));
+
+    // Marcando o amigo como sorteado
+    listaAmigos[indiceAleatorio].classList.add('sorteado');
 
     // Exibindo o nome sorteado na lista de resultados
     const resultado = document.getElementById('resultado');
